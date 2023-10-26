@@ -1,0 +1,18 @@
+--dialog:幅を元のサイズに合わせる/chk,defew=1;高さを元のサイズに合わせる/chk,defeh=1;奥行きを幅に合わせる/chk,defed=1;位置を相対位置に合わせる/chk,defpos=1;X,ecx=0;Y,ecy=0;幅,ew=100;高さ,eh=100;奥行,ed=100;回転Z,erz=0;回転Y,ery=0;回転X,erx=0;
+--track0:基準角Z,-360,360,-90,0.01
+--track1:基準角Y,-360,360,0,0.01
+--track2:基準角X,-360,360,-90,0.01
+--track3:拡張角,-360,360,60,0.01
+--check0:マスクの反転,0
+
+
+local dll = require("ellipsoid_clipping")
+
+
+obj.pixeloption("type", "col")
+local work,data,wp,hp = obj.getpixeldata("work"),obj.getpixeldata()
+dll.ellipsoid_clipping(defew, defeh, defed, defpos, ecx, ecy, ew, eh, ed, erz, ery, erx,
+                   obj.track0, obj.track1, obj.track2, obj.track3, obj.check0,
+                   data, work, wp, hp,
+                   obj.ox, obj.oy)
+obj.putpixeldata(work)
