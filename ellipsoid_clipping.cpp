@@ -51,11 +51,10 @@ int clip(lua_State* L)
 	double ext = lua_tonumber(L, 16);
 	int flip = lua_toboolean(L, 17);
 	PixelBGRA* data = reinterpret_cast<PixelBGRA*>(lua_touserdata(L, 18));
-	PixelBGRA* work = reinterpret_cast<PixelBGRA*>(lua_touserdata(L, 19));
-	int wp = lua_tointeger(L, 20);
-	int hp = lua_tointeger(L, 21);
-	int ox = lua_tointeger(L, 22);
-	int oy = lua_tointeger(L, 23);
+	int wp = lua_tointeger(L, 19);
+	int hp = lua_tointeger(L, 20);
+	int ox = lua_tointeger(L, 21);
+	int oy = lua_tointeger(L, 22);
 
 	if (defew) ew = wp;
 	if (defeh) eh = hp;
@@ -83,45 +82,45 @@ int clip(lua_State* L)
 	ext = rad(ext);
 	auto R = rotm(rz, ry, rx);
 
-	for (int x = 0; x < wp; x++)
+#pragma omp parallel for
+	for (int i = 0; i < wp * hp; i++)
 	{
-		for (int y = 0; y < hp; y++)
+		int x = i % wp;
+		int y = i / wp;
+		PixelBGRA pixel = data[i];
+		if (pixel.a == 0) continue;
+
+		bool invisible = false;
+
+		Eigen::RowVector<double, 3> dxyz(x - ecx, y - ecy, 0 - ecz);
+		dxyz *= ERot;
+		double x_fin = dxyz(0), y_fin = dxyz(1), z_fin = dxyz(2);
+		double tmp_a = l * l / (a * a) + m * m / (b * b) + n * n / (c * c);
+		double tmp_b = 2 * x_fin * l / (a * a) + 2 * y_fin * m / (b * b) + 2 * z_fin * n / (c * c);
+		double tmp_c = x_fin * x_fin / (a * a) + y_fin * y_fin / (b * b) + z_fin * z_fin / (c * c) - 1;
+		double tmp_d = tmp_b * tmp_b - 4 * tmp_a * tmp_c;
+
+		if (tmp_d >= 0)
 		{
-			PixelBGRA pixel = data[x + y * wp];
-			//if (pixel.a == 0) continue;
+			double tmp_t = (-tmp_b - std::sqrt(tmp_d)) / (2 * tmp_a);
+			double int_x = x_fin + tmp_t * l;
+			double int_y = y_fin + tmp_t * m;
+			double int_z = z_fin + tmp_t * n;
+			Eigen::RowVector<double, 3> intersec(int_x, int_y, int_z);
+			intersec *= R;
+			int_x = intersec(0);
+			int_y = intersec(1);
+			int_z = intersec(2);
+			double theta = std::atan2(int_y, int_z);
 
-			bool invisible = false;
-
-			Eigen::RowVector<double, 3> dxyz(x - ecx, y - ecy, 0 - ecz);
-			dxyz *= ERot;
-			double x_fin = dxyz(0), y_fin = dxyz(1), z_fin = dxyz(2);
-			double tmp_a = l * l / (a * a) + m * m / (b * b) + n * n / (c * c);
-			double tmp_b = 2 * x_fin * l / (a * a) + 2 * y_fin * m / (b * b) + 2 * z_fin * n / (c * c);
-			double tmp_c = x_fin * x_fin / (a * a) + y_fin * y_fin / (b * b) + z_fin * z_fin / (c * c) - 1;
-			double tmp_d = tmp_b * tmp_b - 4 * tmp_a * tmp_c;
-
-			if (tmp_d >= 0)
+			if ((0 < theta && theta < ext) || (ext < theta && theta < 0) || (theta + 2 * std::numbers::pi < ext) || ext < theta - 2 * std::numbers::pi)
 			{
-				double tmp_t = (-tmp_b - std::sqrt(tmp_d)) / (2 * tmp_a);
-				double int_x = x_fin + tmp_t * l;
-				double int_y = y_fin + tmp_t * m;
-				double int_z = z_fin + tmp_t * n;
-				Eigen::RowVector<double, 3> intersec(int_x, int_y, int_z);
-				intersec *= R;
-				int_x = intersec(0);
-				int_y = intersec(1);
-				int_z = intersec(2);
-				double theta = std::atan2(int_y, int_z);
-
-				if ((0 < theta && theta < ext) || (ext < theta && theta < 0) || (theta + 2 * std::numbers::pi < ext) || ext < theta - 2 * std::numbers::pi)
-				{
-					invisible = true;
-				}
+				invisible = true;
 			}
-			if (flip) invisible ^= true;
-			if (invisible) pixel.a = 0;
-			work[x + y * wp] = pixel;
 		}
+		if (flip) invisible ^= true;
+		if (invisible) pixel.a = 0;
+		data[i] = pixel;
 	}
 	return 0;
 }
