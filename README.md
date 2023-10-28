@@ -1,6 +1,6 @@
 # AviUtl-EllipsoidClipping
-![GitHub Repo License](https://img.shields.io/github/license/sing-kuro/AviUtl-EllipsoidClipping)
-![GitHub Repo stars](https://img.shields.io/github/stars/sing-kuro/AviUtl-EllipsoidClipping)
+![GitHub Repo License](https://img.shields.io/github/license/sing-kuro/AviUtl-EllipsoidClipping?)
+![GitHub Repo stars](https://img.shields.io/github/stars/sing-kuro/AviUtl-EllipsoidClipping?)
 ![Cpp](https://img.shields.io/badge/-Cplusplus-00599C.svg?logo=cplusplus&style=plastic)
 ![Lua](https://img.shields.io/badge/-Lua-2C2D72.svg?logo=lua&style=plastic)
 
