@@ -44,7 +44,7 @@ X,Y,幅,高さ,奥行きの単位はピクセル
 パラメータがたくさんあって合わせるのが難しいので、あらかじめ傾きのない画像を図形に合わせて切り抜いておき、後から回転させることを推奨します。
 
 ## 自分でビルドしたい人向け
-LuaのライブラリとEigenが必要です。  
+[Luaのライブラリ](https://sourceforge.net/projects/luabinaries/files/5.1.4/Windows%20Libraries/)のlua5_1_4_Win32_dll8_libと[Eigen](https://eigen.tuxfamily.org/)が必要です。  
 MSVC++で、ISO C++ 20 標準・OpenMPを有効にするとビルドできるはずです。
 
 
