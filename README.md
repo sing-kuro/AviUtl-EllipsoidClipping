@@ -49,4 +49,4 @@ X,Y,幅,高さ,奥行きの単位はピクセル
 [Luaのライブラリ](https://sourceforge.net/projects/luabinaries/files/5.1.4/Windows%20Libraries/)のlua5_1_4_Win32_dll8_libと[Eigen](https://eigen.tuxfamily.org/)が必要です。  
 MSVC++で、ISO C++ 20 標準・OpenMPを有効にするとビルドできるはずです。
 
-
+Pull requestは歓迎しますが、いろいろと不慣れなことをご容赦ください。
