@@ -7,6 +7,8 @@
 AviUtl上で月の満ち欠けなどを表現するのに使えるスクリプトです。  
 円や楕円を、球や楕円体とみなして満ち欠けさせます(扇クリッピングと満ち欠け円の機能を兼ね備えていると言えばわかりやすいでしょうか)。  
 
+一応、動画による説明もあります。→ [YouTube](https://youtu.be/Og7QiBeA02U)
+
 ## インストール
 1. [Releases](https://github.com/sing-kuro/AviUtl-EllipsoidClipping/releases)から最新のellipsoid_clipping.zipをダウンロードする。
 1. ダウンロードしたファイルを右クリックしてプロパティを開き、「全般」タブの下のほうにある「セキュリティ」の項目から「許可する」にチェックをいれて適用する。
