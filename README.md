@@ -7,6 +7,8 @@
 AviUtl上で月の満ち欠けなどを表現するのに使えるスクリプトです。  
 円や楕円を、球や楕円体とみなして満ち欠けさせます(扇クリッピングと満ち欠け円の機能を兼ね備えていると言えばわかりやすいでしょうか)。  
 
+動画による簡単な説明もあります。→ [YouTube](https://youtu.be/Og7QiBeA02U)
+
 ## インストール
 1. [Releases](https://github.com/sing-kuro/AviUtl-EllipsoidClipping/releases)から最新のellipsoid_clipping.zipをダウンロードする。
 1. ダウンロードしたファイルを右クリックしてプロパティを開き、「全般」タブの下のほうにある「セキュリティ」の項目から「許可する」にチェックをいれて適用する。
@@ -15,7 +17,7 @@ AviUtl上で月の満ち欠けなどを表現するのに使えるスクリプ�
 
 ## 使い方
 使用したい円か楕円の画像をAviUtlのタイムラインに読み込んでください。その画像にアニメーション効果を追加し、「楕円体クリッピング」を選択してください。  
-(以降、円は楕円、球は楕円体として説明を進めます)  
+(以降、円は「楕円」、球は「楕円体」として説明を進めます)  
 以下、スライダーとチェックボックスの説明
 - 基準角Z・Y・X : どこを欠けさせる(満ちさせる)か(単位は度)
 - 拡張角 : どの程度欠けさせる(満ちさせる)か(単位は度)
@@ -44,7 +46,7 @@ X,Y,幅,高さ,奥行きの単位はピクセル
 パラメータがたくさんあって合わせるのが難しいので、あらかじめ傾きのない画像を図形に合わせて切り抜いておき、後から回転させることを推奨します。
 
 ## 自分でビルドしたい人向け
-[Luaのライブラリ](https://sourceforge.net/projects/luabinaries/files/5.1.4/Windows%20Libraries/)のlua5_1_4_Win32_dll8_libと[Eigen](https://eigen.tuxfamily.org/)が必要です。  
+[Luaのバイナリ](https://sourceforge.net/projects/luabinaries/files/5.1.4/Windows%20Libraries/)のlua5_1_4_Win32_dll8_libと[Eigen](https://eigen.tuxfamily.org/)が必要です。  
 MSVC++で、ISO C++ 20 標準・OpenMPを有効にするとビルドできるはずです。
 
-
+Pull requestは歓迎しますが、いろいろと不慣れなことをご容赦ください。
